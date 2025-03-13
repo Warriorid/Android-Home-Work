@@ -23,11 +23,10 @@ fun <T: libObj> objNumber(listOfObj: List<T>): Int{
 
 fun <T: libObj> bringHome(listOfObj: List<T>, index: Int){
     var type = ""
-    if (listOfObj[index].access && listOfObj[0] is Book || listOfObj[0] is Disk) {
+    if (listOfObj[index].access && (listOfObj[index] is Book || listOfObj[index] is Disk)) {
         listOfObj[index].access = false
         when (listOfObj[index]){
             is Book -> {type = "книгу"}
-            is Newspaper-> {type = "газету"}
             is Disk -> {type = "диск"}
         }
         println("$type ${listOfObj[index].id} взяли домой")
@@ -38,14 +37,13 @@ fun <T: libObj> bringHome(listOfObj: List<T>, index: Int){
 
 fun <T: libObj> readingRoom(listOfObj: List<T>, index: Int){
     var type = ""
-    if (listOfObj[index].access && listOfObj[0] is Book || listOfObj[0] is Newspaper){
-        listOfObj[index].access = false
+    if (listOfObj[index].access && (listOfObj[index] is Book || listOfObj[index] is Newspaper)){
         when (listOfObj[index]){
             is Book -> type = "книгу"
             is Newspaper -> type = "газету"
-            is Disk -> type = "диск"
         }
         println("$type ${listOfObj[index].id} взяли в читальный зал")
+        listOfObj[index].access = false
         return
     }
     else println("Невозможно выполнить данное действие")
