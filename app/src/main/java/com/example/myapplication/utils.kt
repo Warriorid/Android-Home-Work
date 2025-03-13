@@ -11,12 +11,10 @@ fun <T: libObj> objNumber(listOfObj: List<T>): Int{
         }
         println("Введите порядковый номер желаемого объекта или 0 для отмены:")
         val objIndex = readlnOrNull()?.toIntOrNull()?.minus(1)
-        if (objIndex != null && objIndex in listOfObj.indices || objIndex == -1){
-            return objIndex
-        }
-        else{
-            println("Неверный выбор")
-            continue
+        when {
+            objIndex == -1 -> return -1
+            objIndex != null && objIndex in listOfObj.indices -> return objIndex
+            else -> println("Неверный выбор")
         }
     }
 }
