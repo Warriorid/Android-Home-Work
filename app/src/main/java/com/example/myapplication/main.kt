@@ -20,9 +20,9 @@ fun main(){
     val listOfDisks = listOf(
         Disk("DVD", "Дэдпул и Росомаха", 52, true),
         Disk("DVD", "Терминатор", 348, false),
-        Disk("CD", "Интерстеллар", 169, true),
+        Disk("DVD", "Интерстеллар", 169, true),
         Disk("CD", "Начало", 148, true),
-        Disk("CD", "Матрица", 136, true),
+        Disk("DVD", "Матрица", 136, true),
         Disk("CD", "Гладиатор", 155, true)
     )
 
