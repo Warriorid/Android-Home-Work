@@ -1,7 +1,6 @@
 package com.example.myapplication
 
 fun mainMenu(listOfBooks: List<Book>, listOfNewspapers: List<Newspaper>, listOfDisks: List<Disk>){
-
     while (true){
         println("Главное меню")
         println("1 - Показать книги")

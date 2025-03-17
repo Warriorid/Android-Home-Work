@@ -11,6 +11,7 @@ fun <T: libObj>secondMenu(listOfObj: List<T>){
         println("4 - Вернуть")
         println("5 - Вернуться в главное меню")
 
+
         println("Выберете действие:")
         when(readlnOrNull()?.toIntOrNull()){
             1 -> bringHome(listOfObj, objIndex)

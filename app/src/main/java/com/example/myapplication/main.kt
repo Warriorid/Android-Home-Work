@@ -17,6 +17,7 @@ fun main(){
         Newspaper(789, "Известия", 150, true),
         Newspaper(123, "Российская газета", 300, true)
     )
+
     val listOfDisks = listOf(
         Disk("DVD", "Дэдпул и Росомаха", 52, true),
         Disk("DVD", "Терминатор", 348, false),

@@ -48,6 +48,7 @@ fun <T: libObj> readingRoom(listOfObj: List<T>, index: Int){
     return
 }
 
+
 fun <T: libObj> returnObj(listOfObj: List<T>, index: Int){
     if (listOfObj[index].access) {
         println("Невозможно выполнить данное действие")
