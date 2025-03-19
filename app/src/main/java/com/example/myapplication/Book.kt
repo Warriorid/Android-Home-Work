@@ -2,10 +2,10 @@ package com.example.myapplication
 
 data class Book (
     override val name: String,
-    private val count: Int,
-    private val author: String,
     override val id: Int,
-    override var access: Boolean
+    override var access: Boolean,
+    private val count: Int,
+    private val author: String
 
 ): LibraryItem(), InLibraryUse, Rentandable{
 

@@ -2,7 +2,7 @@ package com.example.myapplication
 
 fun itemActionMenu(listOfItems: List<LibraryItem>){
     val itemIndex: Int = userInputtedNumberOfItem(listOfItems)
-    if (itemIndex == -1){return}
+    if (itemIndex == -1) return
     val item = listOfItems[itemIndex]
     while (true){
         println("1 - Взять домой")

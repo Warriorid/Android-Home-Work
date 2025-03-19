@@ -1,10 +1,10 @@
 package com.example.myapplication
 
 data class Newspaper(
-    private val number: Int,
     override val name: String,
     override val id: Int,
-    override var access: Boolean
+    override var access: Boolean,
+    private val number: Int
 
 ): LibraryItem(), InLibraryUse {
 
