@@ -9,9 +9,9 @@ fun mainMenu(listOfBooks: List<Book>, listOfNewspapers: List<Newspaper>, listOfD
         println("4 - Выход из программы")
 
         when(readlnOrNull()?.toIntOrNull()){
-            1 -> secondMenu(listOfBooks)
-            2 -> secondMenu(listOfNewspapers)
-            3 -> secondMenu(listOfDisks)
+            1 -> itemActionMenu(listOfBooks)
+            2 -> itemActionMenu(listOfNewspapers)
+            3 -> itemActionMenu(listOfDisks)
             4 -> return
             else -> println("Неверный выбор")
         }
