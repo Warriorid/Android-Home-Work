@@ -10,12 +10,12 @@ fun main(){
         Book("Евгений Онегин", 6, true, 320, "А. С. Пушкин")
     )
     val listOfNewspapers = listOf(
-        Newspaper("Сельская жизнь", 794, true, 17245),
-        Newspaper("Комсомольская правда", 99, true, 501),
-        Newspaper("Московский комсомолец", 120, false, 302),
-        Newspaper("Аргументы и факты", 200, true, 456),
-        Newspaper("Известия", 150, true, 789),
-        Newspaper("Российская газета", 300, true, 123)
+        Newspaper("Сельская жизнь", 794, true, 17245, "Январь"),
+        Newspaper("Комсомольская правда", 99, true, 501, "Февраль"),
+        Newspaper("Московский комсомолец", 120, false, 302, "Март"),
+        Newspaper("Аргументы и факты", 200, true, 456, "Июнь"),
+        Newspaper("Известия", 150, true, 789, "Август"),
+        Newspaper("Российская газета", 300, true, 123, "Декабрь")
     )
 
     val listOfDisks = listOf(
