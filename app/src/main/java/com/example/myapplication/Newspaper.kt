@@ -4,12 +4,13 @@ data class Newspaper(
     override val name: String,
     override val id: Int,
     override var access: Boolean,
-    private val number: Int
+    private val number: Int,
+    private val month: String
 
 ): LibraryItem(), InLibraryUse {
 
     override fun getFullInfo() = """
-        выпуск: $number газеты $name с id: $id доступен: ${if (access) "да" else "нет"}
+        выпуск: $number газеты $name с id: $id доступен: ${if (access) "да" else "нет"}, месяц выпуска: $month
     """.trimIndent()
 
     override fun getShortInfo(): String = """
