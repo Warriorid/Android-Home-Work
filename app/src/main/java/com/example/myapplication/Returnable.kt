@@ -1,5 +1,5 @@
 package com.example.myapplication
 
-interface Returnable{
+interface Returnable {
     fun returnItem()
 }

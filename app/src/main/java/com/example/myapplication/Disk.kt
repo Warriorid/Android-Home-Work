@@ -1,12 +1,12 @@
 package com.example.myapplication
 
-data class Disk (
+data class Disk(
     override val name: String,
     override val id: Int,
     override var access: Boolean,
     private val type: String
 
-): LibraryItem(), Rentandable{
+) : LibraryItem(), Rentandable {
 
     override fun getFullInfo() = """
         $type $name доступен: ${if (access) "да" else "нет"}

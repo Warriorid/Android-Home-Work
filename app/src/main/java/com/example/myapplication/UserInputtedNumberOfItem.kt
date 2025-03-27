@@ -1,6 +1,6 @@
 package com.example.myapplication
 
-fun userInputtedNumberOfItem(listOfItems: List<LibraryItem>): Int{
+fun userInputtedNumberOfItem(listOfItems: List<LibraryItem>): Int {
     while (true) {
         listOfItems.forEachIndexed { index, item ->
             println("${index + 1}) ${item.getShortInfo()}")
