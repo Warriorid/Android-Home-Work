@@ -1,5 +1,5 @@
 package com.example.myapplication
 
-interface Store <T : LibraryItem> {
-    fun sellItem(): T
+interface Store<out T : LibraryItem> {
+    fun sell(): T
 }

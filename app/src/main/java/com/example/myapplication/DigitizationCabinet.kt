@@ -1,22 +1,20 @@
 package com.example.myapplication
 
 class DigitizationCabinet {
-        fun <T : LibraryItem> digitization(item: T): Disk {
-        when (item) {
+    fun <T : InLibraryUse> digitization(item: T): Disk {
+        return when (item) {
             is Book -> {
-                if (item.access){
-                    println("Книга ${item.name} оцифровывается")
-                    return Disk(item.name, item.id, true, DiskType.CD.toString())
-                }
-                throw IllegalArgumentException("Книга недоступна")
+                require(item.access) { "Книга недоступна" }
+                println("Книга ${item.name} оцифровывается")
+                Disk(item.name, item.id, true, DiskType.CD.toString())
             }
+
             is Newspaper -> {
-                if (item.access){
-                    println("Газета ${item.name} оцифровывается")
-                    return Disk(item.name, item.id, true, DiskType.CD.toString())
-                }
-                throw IllegalArgumentException("Газета недоступна")
+                require(item.access) { "Газета недоступна" }
+                println("Газета ${item.name} оцифровывается")
+                Disk(item.name, item.id, true, DiskType.CD.toString())
             }
+
             else -> throw IllegalArgumentException("Диск уже оцифрован")
         }
     }

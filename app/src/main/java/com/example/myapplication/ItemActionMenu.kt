@@ -1,11 +1,12 @@
 package com.example.myapplication
 
-fun itemActionMenu(listOfItems: List<LibraryItem>){
+fun itemActionMenu(listOfItems: List<LibraryItem>) {
     val itemIndex: Int = userInputtedNumberOfItem(listOfItems)
     if (itemIndex == -1) return
     val item = listOfItems[itemIndex]
+    val digitizedItem = listOfItems[itemIndex] as InLibraryUse
     val digitization = DigitizationCabinet()
-    while (true){
+    while (true) {
         println("1 - Взять домой")
         println("2 - Читать в читальном зале")
         println("3 - Показать подробную информацию")
@@ -15,21 +16,24 @@ fun itemActionMenu(listOfItems: List<LibraryItem>){
         println("7 - Вернуться в главное меню")
 
         println("Выберете действие:")
-        when(readlnOrNull()?.toIntOrNull()){
+        when (readlnOrNull()?.toIntOrNull()) {
             1 -> if (item is Rentandable) item.takeHome()
-                 else println("Газету нельзя брать домой")
+            else println("Газету нельзя брать домой")
+
             2 -> if (item is InLibraryUse) item.readInLibrary()
-                 else println("Диском нельзя пользоваться в читальном зале")
-            3 -> println( item.getFullInfo() )
-            4 -> println( item.getShortInfo() )
+            else println("Диском нельзя пользоваться в читальном зале")
+
+            3 -> println(item.getFullInfo())
+            4 -> println(item.getShortInfo())
             5 -> item.returnItem()
             6 -> {
                 try {
-                    println( digitization.digitization(item).getFullInfo() )
+                    println(digitization.digitization(digitizedItem).getFullInfo())
                 } catch (e: IllegalArgumentException) {
                     println(e.message)
                 }
             }
+
             7 -> return
             else -> println("Неверный выбор")
         }

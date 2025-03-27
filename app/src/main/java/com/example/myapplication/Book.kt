@@ -1,13 +1,13 @@
 package com.example.myapplication
 
-data class Book (
+data class Book(
     override val name: String,
     override val id: Int,
     override var access: Boolean,
     private val count: Int,
     private val author: String
 
-): LibraryItem(), InLibraryUse, Rentandable{
+) : LibraryItem(), InLibraryUse, Rentandable {
 
     override fun getFullInfo() = """
         книга $name ($count стр.) автора: $author c id: $id доступна: ${if (access) "да" else "нет"}
@@ -27,12 +27,11 @@ data class Book (
     }
 
     override fun readInLibrary() {
-        if (access){
+        if (access) {
             println("Книгу $id взяли в читальный зал")
             access = false
             return
-        }
-        else println("Невозможно выполнить данное действие, книгу забрали")
+        } else println("Невозможно выполнить данное действие, книгу забрали")
         return
     }
 
