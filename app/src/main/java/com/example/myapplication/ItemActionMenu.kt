@@ -4,7 +4,6 @@ fun itemActionMenu(listOfItems: List<LibraryItem>) {
     val itemIndex: Int = userInputtedNumberOfItem(listOfItems)
     if (itemIndex == -1) return
     val item = listOfItems[itemIndex]
-    val digitizedItem = listOfItems[itemIndex] as InLibraryUse
     val digitization = DigitizationCabinet()
     while (true) {
         println("1 - Взять домой")
@@ -27,10 +26,14 @@ fun itemActionMenu(listOfItems: List<LibraryItem>) {
             4 -> println(item.getShortInfo())
             5 -> item.returnItem()
             6 -> {
-                try {
-                    println(digitization.digitization(digitizedItem).getFullInfo())
-                } catch (e: IllegalArgumentException) {
-                    println(e.message)
+                if (item is InLibraryUse) {
+                    try {
+                        println(digitization.digitization(item).getFullInfo())
+                    } catch (e: IllegalArgumentException) {
+                        println(e.message)
+                    }
+                } else {
+                    println("Диск уже оцифрован")
                 }
             }
 
