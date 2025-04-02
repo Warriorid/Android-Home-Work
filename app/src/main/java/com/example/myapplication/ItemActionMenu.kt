@@ -27,10 +27,14 @@ fun itemActionMenu(listOfItems: List<LibraryItem>) {
             4 -> println(item.getShortInfo())
             5 -> item.returnItem()
             6 -> {
-                try {
-                    println(digitization.digitization(digitizedItem).getFullInfo())
-                } catch (e: IllegalArgumentException) {
-                    println(e.message)
+                if (item is InLibraryUse) {
+                    try {
+                        println(digitization.digitization(digitizedItem).getFullInfo())
+                    } catch (e: IllegalArgumentException) {
+                        println(e.message)
+                    }
+                } else {
+                    println("Диск уже оцифрован")
                 }
             }
 
