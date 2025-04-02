@@ -4,6 +4,7 @@ fun itemActionMenu(listOfItems: List<LibraryItem>) {
     val itemIndex: Int = userInputtedNumberOfItem(listOfItems)
     if (itemIndex == -1) return
     val item = listOfItems[itemIndex]
+    val digitizedItem = listOfItems[itemIndex] as InLibraryUse
     val digitization = DigitizationCabinet()
     while (true) {
         println("1 - Взять домой")
@@ -28,7 +29,7 @@ fun itemActionMenu(listOfItems: List<LibraryItem>) {
             6 -> {
                 if (item is InLibraryUse) {
                     try {
-                        println(digitization.digitization(item).getFullInfo())
+                        println(digitization.digitization(digitizedItem).getFullInfo())
                     } catch (e: IllegalArgumentException) {
                         println(e.message)
                     }
