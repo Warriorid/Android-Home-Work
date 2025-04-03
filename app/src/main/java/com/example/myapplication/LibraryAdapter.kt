@@ -35,5 +35,10 @@ class LibraryAdapter(private val items: MutableList<LibraryItem>) :
         Toast.makeText(context, "Элемент с id: ${items[position].id}", Toast.LENGTH_SHORT).show()
     }
 
+    fun removeItem(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     override fun getItemCount() = items.size
 }
