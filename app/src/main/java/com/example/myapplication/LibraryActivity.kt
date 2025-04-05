@@ -5,15 +5,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
-
 import com.example.myapplication.databinding.ActivityLibraryBinding
 
 
-class Library : AppCompatActivity() {
+class LibraryActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityLibraryBinding.inflate(layoutInflater)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,12 +23,10 @@ class Library : AppCompatActivity() {
         binding.recyclerView.apply {
             val adapter = LibraryAdapter(DataRepository.listOfAllTypes)
             this.adapter = adapter
-            layoutManager = LinearLayoutManager(this@Library)
+            layoutManager = LinearLayoutManager(this@LibraryActivity)
             val callback = LibraryItemTouchHelper(adapter)
             val itemTouchHelper = ItemTouchHelper(callback)
             itemTouchHelper.attachToRecyclerView(this)
-
-
         }
 
     }
