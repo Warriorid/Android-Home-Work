@@ -1,11 +1,14 @@
 package com.example.myapplication
 
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Book(
     override val name: String,
     override val id: Int,
     override var access: Boolean,
-    private val count: Int,
-    private val author: String
+    val count: Int,
+    val author: String
 
 ) : LibraryItem(), InLibraryUse, Rentandable {
 

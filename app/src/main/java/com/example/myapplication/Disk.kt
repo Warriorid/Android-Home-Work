@@ -1,10 +1,14 @@
 package com.example.myapplication
 
+
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Disk(
     override val name: String,
     override val id: Int,
     override var access: Boolean,
-    private val type: String
+    val type: String
 
 ) : LibraryItem(), Rentandable {
 

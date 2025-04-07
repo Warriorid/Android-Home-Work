@@ -14,14 +14,5 @@ class LibraryViewHolder(private val binding: ItemTemplateBinding) :
             is Newspaper -> binding.imageView.setImageResource(R.drawable.newspaper_avatar)
             is Disk -> binding.imageView.setImageResource(R.drawable.disk_avatar)
         }
-
-        val alphaValue = if (!item.access) 0.3f else 1.0f
-        binding.rootLayout.alpha = alphaValue
-        binding.imageView.alpha = alphaValue
-        binding.itemTitle.alpha = alphaValue
-
-        val elevationValue = if (!item.access) 1f else 10f
-        binding.rootLayout.elevation = elevationValue
-        binding.imageView.elevation = elevationValue
     }
 }

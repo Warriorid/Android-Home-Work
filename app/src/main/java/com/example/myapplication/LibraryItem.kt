@@ -1,6 +1,8 @@
 package com.example.myapplication
 
-abstract class LibraryItem : Returnable {
+import android.os.Parcelable
+
+abstract class LibraryItem : Returnable, Parcelable {
     abstract val name: String
     abstract val id: Int
     abstract var access: Boolean

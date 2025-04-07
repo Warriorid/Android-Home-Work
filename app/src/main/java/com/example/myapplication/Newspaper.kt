@@ -1,11 +1,14 @@
 package com.example.myapplication
 
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Newspaper(
     override val name: String,
     override val id: Int,
     override var access: Boolean,
-    private val number: Int,
-    private val month: Month
+    val number: Int,
+    val month: Month
 
 ) : LibraryItem(), InLibraryUse {
 

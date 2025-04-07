@@ -4,7 +4,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 class LibraryItemTouchHelper(
-    private val adapter: LibraryAdapter
+    private val adapter: LibraryAdapter,
+    private val viewModel: MainViewModel
 ) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
     override fun onMove(
         recyclerView: RecyclerView,
@@ -16,7 +17,8 @@ class LibraryItemTouchHelper(
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val position = viewHolder.adapterPosition
-        adapter.removeItem(position)
+        val removedItem = adapter.removeItem(position)
+        removedItem?.let { viewModel.removeItems(listOf(it)) }
     }
 
 }

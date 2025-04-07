@@ -3,13 +3,11 @@ package com.example.myapplication
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import com.example.myapplication.databinding.ItemTemplateBinding
 
 
-class LibraryAdapter(private val items: MutableList<LibraryItem>) :
-    RecyclerView.Adapter<LibraryViewHolder>() {
+class LibraryAdapter : ListAdapter<LibraryItem, LibraryViewHolder>(LibraryItemDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryViewHolder {
         val binding = ItemTemplateBinding.inflate(
@@ -17,27 +15,31 @@ class LibraryAdapter(private val items: MutableList<LibraryItem>) :
             parent,
             false
         )
-        return LibraryViewHolder(binding).apply {
-            binding.root.setOnClickListener {
-                handleLibraryClick(parent.context, adapterPosition)
-            }
-        }
+        return LibraryViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: LibraryViewHolder, position: Int) {
-        holder.bind(items[position])
+        val item = getItem(position)
+        holder.bind(item)
+
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            item?.let {
+                context.startActivity(ItemActivityNavigator.createIntent(context, item))
+            }
+
+        }
     }
 
-    private fun handleLibraryClick(context: Context, position: Int) {
-        items[position].access = !items[position].access
-        notifyItemChanged(position)
-        Toast.makeText(context, "Элемент с id: ${items[position].id}", Toast.LENGTH_SHORT).show()
+    fun updateItems(newItems: List<LibraryItem>) {
+        submitList(newItems.toList())
     }
 
-    fun removeItem(position: Int) {
-        items.removeAt(position)
-        notifyItemRemoved(position)
+    fun removeItem(position: Int): LibraryItem? {
+        val item = currentList.getOrNull(position) ?: return null
+        val newList = currentList.toMutableList().apply { removeAt(position) }
+        submitList(newList)
+        return item
     }
 
-    override fun getItemCount() = items.size
 }
