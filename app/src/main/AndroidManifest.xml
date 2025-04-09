@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".LibraryActivity"
+            android:name=".activity.LibraryActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ItemActivity">
+        <activity android:name=".activity.ItemActivity">
         </activity>
     </application>
 
