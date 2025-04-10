@@ -20,4 +20,4 @@ class LibraryViewHolder(private val binding: ItemTemplateBinding) :
             is Disk -> binding.imageView.setImageResource(R.drawable.disk_avatar)
         }
     }
-}
+} 

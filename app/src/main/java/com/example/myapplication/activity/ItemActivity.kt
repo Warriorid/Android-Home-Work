@@ -30,9 +30,8 @@ class ItemActivity : AppCompatActivity() {
             binding.saveButtom.setOnClickListener {
                 val newItem = display.createItem(itemType)
                 if (newItem != null) {
-                    val resultIntent = Intent().apply {
-                        putExtra(ItemActivityNavigator.EXTRA_ITEM, newItem)
-                    }
+                    val resultIntent = Intent()
+                    resultIntent.putExtra(ItemActivityNavigator.EXTRA_ITEM, newItem)
                     setResult(RESULT_OK, resultIntent)
                     finish()
                 }

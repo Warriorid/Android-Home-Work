@@ -10,11 +10,7 @@ import com.example.myapplication.databinding.ItemTemplateBinding
 class LibraryAdapter : ListAdapter<LibraryItem, LibraryViewHolder>(LibraryItemDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryViewHolder {
-        val binding = ItemTemplateBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
+        val binding = ItemTemplateBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return LibraryViewHolder(binding)
     }
 
@@ -24,15 +20,8 @@ class LibraryAdapter : ListAdapter<LibraryItem, LibraryViewHolder>(LibraryItemDi
 
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
-            item?.let {
-                context.startActivity(ItemActivityNavigator.createIntent(context, item))
-            }
-
+            item?.let { context.startActivity(ItemActivityNavigator.createIntent(context, item)) }
         }
-    }
-
-    fun updateItems(newItems: List<LibraryItem>) {
-        submitList(newItems.toList())
     }
 
     fun removeItem(position: Int): LibraryItem? {

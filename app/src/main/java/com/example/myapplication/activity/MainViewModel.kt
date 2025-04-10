@@ -13,13 +13,10 @@ class MainViewModel() : ViewModel() {
     fun updateItems(list: List<LibraryItem>) {
         val oldList = _item.value
         _item.value = oldList?.plus(list) ?: list
-
     }
 
     fun removeItems(itemsToRemove: List<LibraryItem>) {
-        val currentList = _item.value.orEmpty()
-        _item.value = currentList.filterNot { item ->
-            itemsToRemove.any { it.id == item.id }
-        }
+        val currentList = _item.value
+        _item.value = currentList?.minus(itemsToRemove)
     }
 }
