@@ -6,12 +6,12 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.consoleapp.LibraryItem
-import com.example.myapplication.databinding.ActivityItemBinding
+import com.example.myapplication.databinding.FragmentItemBinding
 
 class ItemActivity : AppCompatActivity() {
 
     private val binding by lazy {
-        ActivityItemBinding.inflate(layoutInflater)
+        FragmentItemBinding.inflate(layoutInflater)
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

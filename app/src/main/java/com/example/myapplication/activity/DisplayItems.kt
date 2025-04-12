@@ -6,9 +6,9 @@ import com.example.myapplication.consoleapp.Disk
 import com.example.myapplication.consoleapp.LibraryItem
 import com.example.myapplication.consoleapp.Newspaper
 import com.example.myapplication.R
-import com.example.myapplication.databinding.ActivityItemBinding
+import com.example.myapplication.databinding.FragmentItemBinding
 
-class DisplayItems(private val binding: ActivityItemBinding) {
+class DisplayItems(private val binding: FragmentItemBinding) {
     fun displayItem(item: LibraryItem) {
         binding.apply {
             textItemName.text = item.name

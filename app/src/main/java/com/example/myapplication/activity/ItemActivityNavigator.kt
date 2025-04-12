@@ -1,23 +1,31 @@
 package com.example.myapplication.activity
 
-import android.content.Context
-import android.content.Intent
+import android.os.Bundle
 import com.example.myapplication.consoleapp.LibraryItem
+import com.example.myapplication.fragment.ItemFragment
 
 object ItemActivityNavigator {
 
-    const val EXTRA_ITEM = "extra_item"
+
     const val EXTRA_TYPE = "extra_type"
+    const val EXTRA_ITEM = "extra_item"
 
-    fun createIntent(context: Context, item: LibraryItem): Intent {
-        return Intent(context, ItemActivity::class.java).apply {
-            putExtra(EXTRA_ITEM, item)
+    fun newInstance(item: LibraryItem): ItemFragment {
+        return ItemFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(EXTRA_ITEM, item)
+            }
+        }
+
+    }
+
+    fun newInstance(itemType: String): ItemFragment {
+        return ItemFragment().apply {
+            arguments = Bundle().apply {
+                putString(EXTRA_TYPE, itemType)
+            }
         }
     }
 
-    fun createIntentForAdd(context: Context, itemType: String): Intent {
-        return Intent(context, ItemActivity::class.java).apply {
-            putExtra(EXTRA_TYPE, itemType)
-        }
-    }
+
 }

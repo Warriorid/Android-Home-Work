@@ -8,9 +8,9 @@ import com.example.myapplication.consoleapp.Disk
 import com.example.myapplication.consoleapp.LibraryItem
 import com.example.myapplication.data.Month
 import com.example.myapplication.consoleapp.Newspaper
-import com.example.myapplication.databinding.ActivityItemBinding
+import com.example.myapplication.databinding.FragmentItemBinding
 
-class DisplayAddItem(private val binding: ActivityItemBinding) {
+class DisplayAddItem(private val binding: FragmentItemBinding) {
     fun display(itemType: String) {
         when (itemType) {
             "Book" -> {

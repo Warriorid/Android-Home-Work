@@ -1,33 +1,45 @@
 package com.example.myapplication.activity
 
-import android.content.Context
-import android.content.Intent
-import androidx.activity.result.ActivityResultLauncher
+import androidx.fragment.app.FragmentManager
 import com.example.myapplication.R
-import com.example.myapplication.databinding.ActivityLibraryBinding
+import com.example.myapplication.databinding.FragmentMainBinding
 
 
-fun toolbarMenu (binding: ActivityLibraryBinding, context: Context, addItemLauncher: ActivityResultLauncher<Intent>) {
+fun toolbarMenu(
+    binding: FragmentMainBinding,
+    viewModel: MainViewModel,
+    fragmentManager: FragmentManager
+) {
     binding.toolbar.setOnMenuItemClickListener { menuItem ->
+        viewModel.clearSelectedItem()
         when (menuItem.itemId) {
             R.id.action_book -> {
-                addItemLauncher.launch(ItemActivityNavigator.createIntentForAdd(context, "Book"))
+                viewModel.setItemType("Book")
+                openItemFragment(fragmentManager, "Book")
                 true
             }
 
             R.id.action_newspaper -> {
-                addItemLauncher.launch(
-                    ItemActivityNavigator.createIntentForAdd(context, "Newspaper")
-                )
+                viewModel.setItemType("Newspaper")
+                openItemFragment(fragmentManager, "Newspaper")
                 true
             }
 
             R.id.action_disk -> {
-                addItemLauncher.launch(ItemActivityNavigator.createIntentForAdd(context, "Disk"))
+                viewModel.setItemType("Disk")
+                openItemFragment(fragmentManager, "Disk")
                 true
             }
 
             else -> false
         }
     }
+}
+
+private fun openItemFragment(fragmentManager: FragmentManager, itemType: String) {
+    val fragment = ItemActivityNavigator.newInstance(itemType)
+    fragmentManager.beginTransaction()
+        .add(R.id.mainFragment, fragment)
+        .addToBackStack(null)
+        .commit()
 }
