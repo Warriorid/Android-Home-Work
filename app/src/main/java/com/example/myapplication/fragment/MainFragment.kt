@@ -1,5 +1,6 @@
 package com.example.myapplication.fragment
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,6 +25,7 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(requireActivity())[MainViewModel::class.java]
     }
+    private var isLandscape: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,15 +37,28 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        toolbarMenu(binding, viewModel, parentFragmentManager)
+        isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        toolbarMenu(binding, viewModel, parentFragmentManager, isLandscape)
+        if (isLandscape && savedInstanceState == null && viewModel.selectedItem.value != null) {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.itemFragment, ItemFragment())
+                .commit()
+        }
 
         fragmentAdapter = LibraryAdapter { item ->
             viewModel.selectItem(item)
 
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.mainFragment, ItemFragment())
-                .addToBackStack(null)
-                .commit()
+            if (isLandscape) {
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.itemFragment, ItemFragment())
+                    .commit()
+            } else {
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.mainFragment, ItemFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
+
         }
         binding.recyclerView.apply {
             adapter = fragmentAdapter

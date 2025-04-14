@@ -13,6 +13,7 @@ class MainViewModel() : ViewModel() {
     private val _selectedItem = MutableLiveData<LibraryItem?>(null)
     val selectedItem: LiveData<LibraryItem?> = _selectedItem
     private val _itemType = MutableLiveData<String?>(null)
+    var isItemFragmentOpen: Boolean = false
 
     init {
         loadData()
