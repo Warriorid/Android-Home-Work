@@ -32,19 +32,16 @@ class ItemFragment : Fragment() {
         if (viewModel.selectedItem.value == null) {
             outState.putString(ItemFragmentNavigator.EXTRA_TYPE, itemType)
         }
-
-        Log.d("item", "!!!onSaveInstanceState ${viewModel.getItemType()}, ${viewModel.selectedItem.value}")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (viewModel.closeFragment.value == true){
+        if (viewModel.closeFragment.value == true) {
             savedInstanceState?.clear()
         }
         isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         itemType = savedInstanceState?.getString(ItemFragmentNavigator.EXTRA_TYPE)
             ?: viewModel.getItemType()
-        Log.d("item", "!!!onCreate ${viewModel.getItemType()}, ${viewModel.selectedItem.value}")
     }
 
     override fun onCreateView(
@@ -53,13 +50,11 @@ class ItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentItemBinding.inflate(inflater, container, false)
-        Log.d("item", "!!!onCreateView ${viewModel.getItemType()}, ${viewModel.selectedItem.value}")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("item", "!!!onViewCreated ${viewModel.getItemType()}, ${viewModel.selectedItem.value}")
         viewModel.selectedItem.observe(viewLifecycleOwner) { item ->
             item?.let {
                 DisplayItems(binding).displayItem(it)
@@ -76,7 +71,7 @@ class ItemFragment : Fragment() {
 
         binding.saveButtom.setOnClickListener {
             val newItem = DisplayAddItem(binding).createItem(itemType!!)
-            newItem.let {  item ->
+            newItem.let { item ->
                 viewModel.updateItems(item!!)
                 closeFragment()
             }
@@ -85,6 +80,7 @@ class ItemFragment : Fragment() {
             closeFragment()
         }
     }
+
     private fun closeFragment() {
         closeFragment = true
         viewModel.clearSelectedItem()
@@ -96,35 +92,8 @@ class ItemFragment : Fragment() {
         parentFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d("item", "!!!onStart ${viewModel.getItemType()}, ${viewModel.selectedItem.value}")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("item", "!!!onResume ${viewModel.getItemType()}, ${viewModel.selectedItem.value}")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("item", "!!!onStop ${viewModel.getItemType()}, ${viewModel.selectedItem.value}")
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        Log.d("item", "!!!onDestroyView( ${viewModel.getItemType()}, ${viewModel.selectedItem.value}")
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("item", "!!!onDestroy ${viewModel.getItemType()}, ${viewModel.selectedItem.value}")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.d("item", "!!!onDetach ${viewModel.getItemType()}, ${viewModel.selectedItem.value}")
-    }
-
 }

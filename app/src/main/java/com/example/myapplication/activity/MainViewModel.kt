@@ -48,7 +48,7 @@ class MainViewModel() : ViewModel() {
         _selectedItem.value = null
     }
 
-    fun closeFragment(flag: Boolean){
+    fun closeFragment(flag: Boolean) {
         _closeFragment.value = flag
     }
 

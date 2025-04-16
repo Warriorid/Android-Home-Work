@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
@@ -32,15 +33,23 @@ class LibraryActivity : AppCompatActivity() {
                 .replace(R.id.mainFragment, MainFragment())
                 .commit()
 
-            if (viewModel.selectedItem.value != null || viewModel.getItemType() != null) {
+            if (viewModel.selectedItem.value == null && viewModel.getItemType() == null) {
+                supportFragmentManager.findFragmentById(R.id.itemFragment)?.let {
+                    supportFragmentManager.beginTransaction()
+                        .remove(it)
+                        .commit()
+                }
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            } else {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.itemFragment, ItemFragment())
                     .commit()
             }
+
         } else {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.mainFragment, MainFragment())
-                    .commit()
+                .replace(R.id.mainFragment, MainFragment())
+                .commit()
             if (viewModel.getItemType() != null || viewModel.selectedItem.value != null) {
                 supportFragmentManager.beginTransaction()
                     .add(R.id.mainFragment, ItemFragment())
