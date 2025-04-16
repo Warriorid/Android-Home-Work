@@ -8,10 +8,12 @@ class LibraryItemDiffUtil : DiffUtil.ItemCallback<LibraryItem>() {
     override fun areItemsTheSame(oldItem: LibraryItem, newItem: LibraryItem): Boolean {
         return oldItem.id == newItem.id
     }
-
-    @SuppressLint("DiffUtilEquals")
     override fun areContentsTheSame(oldItem: LibraryItem, newItem: LibraryItem): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id &&
+                oldItem.name == newItem.name &&
+                oldItem.access == newItem.access &&
+                oldItem.getFullInfo() == newItem.getFullInfo() &&
+                oldItem.getShortInfo() == newItem.getShortInfo()
     }
 
 }

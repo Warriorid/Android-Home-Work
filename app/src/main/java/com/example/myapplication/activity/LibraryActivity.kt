@@ -25,32 +25,27 @@ class LibraryActivity : AppCompatActivity() {
         setContentView(binding.root)
         isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
-        val shouldRestoreItemFragment = (savedInstanceState != null && viewModel.isItemFragmentOpen) ||
-                (viewModel.selectedItem.value != null && !isLandscape)
+
 
         if (isLandscape) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.mainFragment, MainFragment.newInstance())
+                .replace(R.id.mainFragment, MainFragment())
                 .commit()
 
-            if (viewModel.selectedItem.value != null) {
+            if (viewModel.selectedItem.value != null || viewModel.getItemType() != null) {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.itemFragment, ItemFragment())
                     .commit()
-                viewModel.isItemFragmentOpen = true
             }
         } else {
-            if (shouldRestoreItemFragment) {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.mainFragment, ItemFragment())
-                    .addToBackStack(null)
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.mainFragment, MainFragment())
                     .commit()
-                viewModel.isItemFragmentOpen = true
-            } else {
+            if (viewModel.getItemType() != null || viewModel.selectedItem.value != null) {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.mainFragment, MainFragment.newInstance())
+                    .add(R.id.mainFragment, ItemFragment())
+                    .addToBackStack("itemFragment")
                     .commit()
-                viewModel.isItemFragmentOpen = false
             }
         }
 

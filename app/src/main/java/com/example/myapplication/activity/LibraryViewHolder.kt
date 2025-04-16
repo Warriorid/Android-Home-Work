@@ -14,10 +14,12 @@ class LibraryViewHolder(private val binding: ItemTemplateBinding) :
     fun bind(item: LibraryItem) {
         binding.itemTitle.text = "${item.name} id: ${item.id}"
 
-        when (item) {
-            is Book -> binding.imageView.setImageResource(R.drawable.book_avatar)
-            is Newspaper -> binding.imageView.setImageResource(R.drawable.newspaper_avatar)
-            is Disk -> binding.imageView.setImageResource(R.drawable.disk_avatar)
+        val image = when (item) {
+            is Book -> R.drawable.book_avatar
+            is Newspaper -> R.drawable.newspaper_avatar
+            is Disk -> R.drawable.disk_avatar
+            else -> throw IllegalArgumentException("такого типа нет")
         }
+        binding.imageView.setImageResource(image)
     }
 } 

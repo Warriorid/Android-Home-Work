@@ -38,7 +38,7 @@ fun toolbarMenu(
 }
 
 private fun openItemFragment(fragmentManager: FragmentManager, itemType: String, isLandscape: Boolean) {
-    val fragment = ItemActivityNavigator.newInstance(itemType)
+    val fragment = ItemFragmentNavigator.newInstance(itemType)
 
     if (isLandscape) {
             fragmentManager.beginTransaction()
@@ -47,7 +47,7 @@ private fun openItemFragment(fragmentManager: FragmentManager, itemType: String,
     }
     else {
             fragmentManager.beginTransaction()
-            .replace(R.id.mainFragment, fragment)
+            .add(R.id.mainFragment, fragment)
             .addToBackStack(null)
             .commit()
     }

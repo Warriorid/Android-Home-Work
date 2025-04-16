@@ -54,7 +54,7 @@ class MainFragment : Fragment() {
                     .commit()
             } else {
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.mainFragment, ItemFragment())
+                    .add(R.id.mainFragment, ItemFragment())
                     .addToBackStack(null)
                     .commit()
             }
@@ -72,11 +72,7 @@ class MainFragment : Fragment() {
     }
 
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = MainFragment()
 
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

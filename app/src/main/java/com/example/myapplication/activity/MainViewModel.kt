@@ -1,5 +1,6 @@
 package com.example.myapplication.activity
 
+import android.content.res.Configuration
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +14,9 @@ class MainViewModel() : ViewModel() {
     private val _selectedItem = MutableLiveData<LibraryItem?>(null)
     val selectedItem: LiveData<LibraryItem?> = _selectedItem
     private val _itemType = MutableLiveData<String?>(null)
-    var isItemFragmentOpen: Boolean = false
+    private val _closeFragment = MutableLiveData<Boolean>(false)
+    val closeFragment: LiveData<Boolean> = _closeFragment
+
 
     init {
         loadData()
@@ -33,13 +36,22 @@ class MainViewModel() : ViewModel() {
         _selectedItem.value = item
     }
 
-    fun setItemType(type: String) {
+    fun setItemType(type: String?) {
         _itemType.value = type
+    }
+
+    fun getItemType(): String? {
+        return _itemType.value
     }
 
     fun clearSelectedItem() {
         _selectedItem.value = null
     }
+
+    fun closeFragment(flag: Boolean){
+        _closeFragment.value = flag
+    }
+
 
     fun removeItems(itemsToRemove: List<LibraryItem>) {
         val currentList = _item.value

@@ -19,8 +19,8 @@ class ItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val item = intent.getParcelableExtra(ItemActivityNavigator.EXTRA_ITEM, LibraryItem::class.java)
-        val itemType = intent.getStringExtra(ItemActivityNavigator.EXTRA_TYPE).toString()
+        val item = intent.getParcelableExtra(ItemFragmentNavigator.EXTRA_ITEM, LibraryItem::class.java)
+        val itemType = intent.getStringExtra(ItemFragmentNavigator.EXTRA_TYPE).toString()
         if (item != null) {
             DisplayItems(binding).displayItem(item)
         } else {
@@ -31,7 +31,7 @@ class ItemActivity : AppCompatActivity() {
                 val newItem = display.createItem(itemType)
                 if (newItem != null) {
                     val resultIntent = Intent()
-                    resultIntent.putExtra(ItemActivityNavigator.EXTRA_ITEM, newItem)
+                    resultIntent.putExtra(ItemFragmentNavigator.EXTRA_ITEM, newItem)
                     setResult(RESULT_OK, resultIntent)
                     finish()
                 }
