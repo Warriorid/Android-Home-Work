@@ -7,7 +7,7 @@ import com.example.myapplication.consoleapp.LibraryItem
 object ItemActivityNavigator {
 
     const val EXTRA_ITEM = "extra_item"
-    const val EXTRA_TYPE = "extra_type"
+    const val EXTRA_ITEM_TYPE = "extra_type"
 
     fun createIntent(context: Context, item: LibraryItem): Intent {
         return Intent(context, ItemActivity::class.java).apply {
@@ -15,9 +15,9 @@ object ItemActivityNavigator {
         }
     }
 
-    fun createIntentForAdd(context: Context, itemType: String): Intent {
+    fun createIntentType(context: Context, itemType: String): Intent {
         return Intent(context, ItemActivity::class.java).apply {
-            putExtra(EXTRA_TYPE, itemType)
+            putExtra(EXTRA_ITEM_TYPE, itemType)
         }
     }
 }

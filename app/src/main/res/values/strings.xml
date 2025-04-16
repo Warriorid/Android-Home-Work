@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">My Application</string>
+
+    <string name="error_enter_name">Введите название</string>
+    <string name="error_enter_numeric_id">Введите числовой ID</string>
+    <string name="available">В наличии</string>
+
+    <string name="book_pages">Страниц</string>
+    <string name="book_author">Автор</string>
+    <string name="hint_enter_pages">Введите количество страниц</string>
+    <string name="error_enter_pages">Введите количество страниц</string>
+    <string name="hint_enter_author">Введите автора</string>
+    <string name="error_enter_author">Введите автора</string>
+
+    <string name="newspaper_number">Номер</string>
+    <string name="newspaper_month">Месяц</string>
+    <string name="hint_enter_number">Введите номер</string>
+    <string name="error_enter_number">Введите номер газеты</string>
+    <string name="hint_enter_month">Введите месяц</string>
+    <string name="error_enter_month">Выберите месяц из списка</string>
+
+    <string name="disk_type">Тип</string>
+    <string name="hint_enter_type">Введите тип диска</string>
+    <string name="error_enter_type">Введите тип диска</string>
 </resources>

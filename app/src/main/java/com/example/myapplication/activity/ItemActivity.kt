@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.consoleapp.LibraryItem
 import com.example.myapplication.databinding.ActivityItemBinding
 
-class ItemActivity : AppCompatActivity() {
+class ItemActivity () : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityItemBinding.inflate(layoutInflater)
@@ -18,9 +18,10 @@ class ItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
         val item = intent.getParcelableExtra(ItemActivityNavigator.EXTRA_ITEM, LibraryItem::class.java)
-        val itemType = intent.getStringExtra(ItemActivityNavigator.EXTRA_TYPE).toString()
+        val itemType = intent.getStringExtra(ItemActivityNavigator.EXTRA_ITEM_TYPE).toString()
+
+
         if (item != null) {
             DisplayItems(binding).displayItem(item)
         } else {
