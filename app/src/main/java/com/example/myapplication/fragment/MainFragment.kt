@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
@@ -16,6 +18,8 @@ import com.example.myapplication.activity.LibraryAdapter
 import com.example.myapplication.activity.LibraryItemTouchHelper
 import com.example.myapplication.activity.MainViewModel
 import com.example.myapplication.databinding.FragmentMainBinding
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 
 class MainFragment : Fragment() {
@@ -67,9 +71,25 @@ class MainFragment : Fragment() {
             val swipeDeleted = LibraryItemTouchHelper(fragmentAdapter, viewModel)
             ItemTouchHelper(swipeDeleted).attachToRecyclerView(this)
         }
-        viewModel.item.observe(viewLifecycleOwner) { items ->
-            fragmentAdapter.submitList(items)
-        }
+
+
+        viewModel.loading.onEach { loading ->
+            if (loading == false) {
+                binding.apply {
+                    shimmerLayout.visibility = View.GONE
+                    toolbar.visibility = View.VISIBLE
+                    recyclerView.visibility = View.VISIBLE
+                }
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.item.onEach { item ->
+            fragmentAdapter.submitList(item)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.error.onEach { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onDestroyView() {

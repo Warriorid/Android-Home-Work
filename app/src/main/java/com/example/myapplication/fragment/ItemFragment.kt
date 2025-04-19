@@ -36,9 +36,6 @@ class ItemFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (viewModel.closeFragment.value == true) {
-            savedInstanceState?.clear()
-        }
         isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         itemType = savedInstanceState?.getString(ItemFragmentNavigator.EXTRA_TYPE)
             ?: viewModel.getItemType()
@@ -85,7 +82,6 @@ class ItemFragment : Fragment() {
         closeFragment = true
         viewModel.clearSelectedItem()
         viewModel.setItemType(null)
-        viewModel.closeFragment(true)
         parentFragmentManager.beginTransaction()
             .remove(this@ItemFragment)
             .commit()
