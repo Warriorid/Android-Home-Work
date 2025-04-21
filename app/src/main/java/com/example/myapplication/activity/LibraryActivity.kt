@@ -52,7 +52,7 @@ class LibraryActivity : AppCompatActivity() {
                 .commit()
             if (viewModel.getItemType() != null || viewModel.selectedItem.value != null) {
                 supportFragmentManager.beginTransaction()
-                    .add(R.id.mainFragment, ItemFragment())
+                    .replace(R.id.mainFragment, ItemFragment())
                     .addToBackStack("itemFragment")
                     .commit()
             }
