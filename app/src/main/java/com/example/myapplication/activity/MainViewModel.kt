@@ -34,7 +34,7 @@ class MainViewModel() : ViewModel() {
     }
 
     private fun loadData() {
-        val randomTime = (10000..10000).random().toLong()
+        val randomTime = (100..3000).random().toLong()
         _loading.value = true
         viewModelScope.launch {
             delay(randomTime)

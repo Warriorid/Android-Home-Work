@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -31,6 +32,9 @@ class ItemFragment : Fragment() {
         super.onSaveInstanceState(outState)
         if (viewModel.selectedItem.value == null) {
             outState.putString(ItemFragmentNavigator.EXTRA_TYPE, itemType)
+        } else {
+            Toast.makeText(context, "Пожалуйста, заполните все поля корректно", Toast.LENGTH_LONG)
+                .show()
         }
     }
 
@@ -68,8 +72,8 @@ class ItemFragment : Fragment() {
 
         binding.saveButtom.setOnClickListener {
             val newItem = DisplayAddItem(binding).createItem(itemType!!)
-            newItem.let { item ->
-                viewModel.updateItems(item!!)
+            if (newItem != null) {
+                viewModel.updateItems(newItem)
                 closeFragment()
             }
         }

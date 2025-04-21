@@ -59,7 +59,7 @@ class MainFragment : Fragment() {
                     .commit()
             } else {
                 parentFragmentManager.beginTransaction()
-                    .add(R.id.mainFragment, ItemFragment())
+                    .replace(R.id.mainFragment, ItemFragment())
                     .addToBackStack(null)
                     .commit()
             }
@@ -142,7 +142,7 @@ class MainFragment : Fragment() {
                 .commit()
         } else {
             fragmentManager.beginTransaction()
-                .add(R.id.mainFragment, fragment)
+                .replace(R.id.mainFragment, fragment)
                 .addToBackStack(null)
                 .commit()
         }
