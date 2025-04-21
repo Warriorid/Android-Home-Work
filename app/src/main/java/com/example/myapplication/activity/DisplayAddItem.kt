@@ -12,7 +12,6 @@ import com.example.myapplication.consoleapp.Newspaper
 import com.example.myapplication.databinding.FragmentItemBinding
 
 class DisplayAddItem(private val binding: FragmentItemBinding) {
-    private val resources = binding.root.context.resources
     fun display(itemType: String) {
         when (itemType) {
             "Book" -> {
@@ -32,6 +31,7 @@ class DisplayAddItem(private val binding: FragmentItemBinding) {
     }
 
     fun createItem(itemType: String): LibraryItem? {
+        val resources = binding.root.context.resources
         val name = binding.editName.text.toString().takeIf { it.isNotBlank() } ?: run {
             binding.editName.error = resources.getString(R.string.error_enter_name)
             return null
@@ -100,6 +100,7 @@ class DisplayAddItem(private val binding: FragmentItemBinding) {
     }
 
     private fun displayNewspaper() {
+        val resources = binding.root.context.resources
         binding.apply {
             itemTextOptionally.text = resources.getString(R.string.newspaper_number)
             editOptional.inputType = InputType.TYPE_CLASS_NUMBER
@@ -111,6 +112,7 @@ class DisplayAddItem(private val binding: FragmentItemBinding) {
     }
 
     private fun displayDisk() {
+        val resources = binding.root.context.resources
         binding.apply {
             itemTextOptionally.text = resources.getString(R.string.disk_type)
             itemTextSecondOptional.visibility = View.GONE

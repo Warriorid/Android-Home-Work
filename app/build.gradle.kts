@@ -48,6 +48,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.navigation.ui)
+    implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.runtime.android)
     implementation (libs.shimmer)
     testImplementation(libs.junit)

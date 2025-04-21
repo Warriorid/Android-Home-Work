@@ -10,7 +10,7 @@ object ItemFragmentNavigator {
     const val EXTRA_ITEM = "extra_item"
     const val EXTRA_CONDITION = "extra_condition"
 
-    fun newInstance(itemType: String): ItemFragment {
+    fun newItemFragment(itemType: String): ItemFragment {
         return ItemFragment().apply {
             arguments = Bundle().apply {
                 putString(EXTRA_TYPE, itemType)
