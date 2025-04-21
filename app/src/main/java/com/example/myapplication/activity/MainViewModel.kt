@@ -34,16 +34,20 @@ class MainViewModel() : ViewModel() {
     }
 
     private fun loadData() {
-        val randomTime = (1000..3000).random().toLong()
+        val randomTime = (10000..10000).random().toLong()
         _loading.value = true
         viewModelScope.launch {
             delay(randomTime)
             try {
                 if (Random.nextInt(3) == 0) throw IOException("Невозможно загрузить данные")
-                _item.value += DataRepository.listOfAllTypes
+                _item.value = DataRepository.listOfAllTypes
             } catch (e: Exception) {
                 _error.emit("Неудалось загрузить данные")
             } finally {
+                if (randomTime.toInt() < 1000) {
+                    val extraTime = (1000 - randomTime.toInt()).toLong()
+                    delay(extraTime)
+                }
                 _loading.value = false
             }
         }
