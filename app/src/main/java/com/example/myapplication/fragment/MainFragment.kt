@@ -102,9 +102,7 @@ class MainFragment : Fragment() {
                     viewModel.setItemType("Disk")
                     openItemFragment(fragmentManager, "Disk", isLandscape)
                     true
-                }
-
-                else -> false
+                }else -> false
             }
         }
     }
@@ -114,7 +112,7 @@ class MainFragment : Fragment() {
         itemType: String,
         isLandscape: Boolean
     ) {
-        val fragment = ItemFragmentNavigator.newInstance(itemType)
+        val fragment = ItemFragmentNavigator.newItemFragment(itemType)
 
         if (isLandscape) {
             fragmentManager.beginTransaction()

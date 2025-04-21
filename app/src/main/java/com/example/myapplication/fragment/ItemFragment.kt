@@ -75,8 +75,7 @@ class ItemFragment : Fragment() {
             if ( newItem != null ) {
                 viewModel.updateItems(newItem)
                 closeFragment()
-            }
-            else {
+            } else {
                 Toast.makeText(context, "Пожалуйста, заполните все поля корректно", Toast.LENGTH_LONG).show()
             }
         }
