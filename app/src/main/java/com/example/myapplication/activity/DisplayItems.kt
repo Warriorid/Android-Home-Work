@@ -1,11 +1,10 @@
 package com.example.myapplication.activity
 
 import android.view.View
-import com.example.myapplication.consoleapp.Book
-import com.example.myapplication.consoleapp.Disk
-import com.example.myapplication.consoleapp.LibraryItem
-import com.example.myapplication.consoleapp.Newspaper
 import com.example.myapplication.R
+import com.example.myapplication.data.Book
+import com.example.myapplication.data.LibraryItem
+import com.example.myapplication.data.Newspaper
 import com.example.myapplication.databinding.FragmentItemBinding
 
 class DisplayItems(private val binding: FragmentItemBinding) {
@@ -21,10 +20,10 @@ class DisplayItems(private val binding: FragmentItemBinding) {
             editOptional.visibility = View.GONE
             editSecondOptional.visibility = View.GONE
 
-            when (item) {
-                is Book -> displayBook(item)
-                is Newspaper -> displayNewspaper(item)
-                is Disk -> displayDisk(item)
+            when (item.itemType) {
+                "book" -> displayBook(item as Book)
+                "newspaper" -> displayNewspaper(item as Newspaper)
+                "disk" -> displayDisk(item as com.example.myapplication.data.Disk)
             }
         }
     }
@@ -33,7 +32,7 @@ class DisplayItems(private val binding: FragmentItemBinding) {
         binding.apply {
             imageItem.setImageResource(R.drawable.book_avatar)
             itemTextOptionally.text = "Страниц:"
-            itemTextOptionallyResult.text = book.count.toString()
+            itemTextOptionallyResult.text = book.pages.toString()
             itemTextSecondOptional.text = "Автор:"
             itemTextSecondOptionalResult.text = book.author
         }
@@ -49,11 +48,11 @@ class DisplayItems(private val binding: FragmentItemBinding) {
         }
     }
 
-    private fun displayDisk(disk: Disk) {
+    private fun displayDisk(disk: com.example.myapplication.data.Disk) {
         binding.apply {
             imageItem.setImageResource(R.drawable.disk_avatar)
             itemTextOptionally.text = "Тип:"
-            itemTextOptionallyResult.text = disk.type
+            itemTextOptionallyResult.text = disk.diskType
             itemTextSecondOptional.visibility = View.GONE
             itemTextSecondOptionalResult.visibility = View.GONE
         }

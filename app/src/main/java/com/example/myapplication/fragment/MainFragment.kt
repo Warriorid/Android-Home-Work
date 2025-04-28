@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.activity.ItemFragmentNavigator
 import com.example.myapplication.activity.LibraryAdapter
@@ -27,9 +29,7 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private lateinit var fragmentAdapter: LibraryAdapter
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(requireActivity())[MainViewModel::class.java]
-    }
+    private val viewModel: MainViewModel by activityViewModels()
     private var isLandscape: Boolean = false
 
     override fun onCreateView(
@@ -70,12 +70,37 @@ class MainFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             val swipeDeleted = LibraryItemTouchHelper(fragmentAdapter, viewModel)
             ItemTouchHelper(swipeDeleted).attachToRecyclerView(this)
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                    viewModel.checkPagination(lastVisibleItemPosition)
+                    viewModel.checkPagination(firstVisibleItemPosition)
+                }
+            })
         }
 
 
+        binding.apply {
+            shimmerLayout.visibility = View.VISIBLE
+            shimmerLayout.startShimmer()
+            toolbar.visibility = View.GONE
+            recyclerView.visibility = View.GONE
+        }
+
         viewModel.loading.onEach { loading ->
-            if (loading == false) {
+            if (loading == true) {
                 binding.apply {
+                    shimmerLayout.visibility = View.VISIBLE
+                    shimmerLayout.startShimmer()
+                    toolbar.visibility = View.GONE
+                    recyclerView.visibility = View.GONE
+                }
+            } else {
+                binding.apply {
+                    shimmerLayout.stopShimmer()
                     shimmerLayout.visibility = View.GONE
                     toolbar.visibility = View.VISIBLE
                     recyclerView.visibility = View.VISIBLE
@@ -122,7 +147,15 @@ class MainFragment : Fragment() {
                     viewModel.setItemType("Disk")
                     openItemFragment(fragmentManager, "Disk", isLandscape)
                     true
-                } else -> false
+                }
+                R.id.action_sort_by_name -> {
+                    viewModel.sortItems("name")
+                    true
+                }
+                R.id.action_sort_by_date -> {
+                    viewModel.sortItems("date")
+                    true
+                }else -> false
             }
         }
     }

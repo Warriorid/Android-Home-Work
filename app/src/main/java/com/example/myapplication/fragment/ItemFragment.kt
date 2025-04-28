@@ -2,11 +2,9 @@ package com.example.myapplication.fragment
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -15,6 +13,7 @@ import com.example.myapplication.activity.DisplayAddItem
 import com.example.myapplication.activity.DisplayItems
 import com.example.myapplication.activity.ItemFragmentNavigator
 import com.example.myapplication.activity.MainViewModel
+import com.example.myapplication.data.LibraryItem
 import com.example.myapplication.databinding.FragmentItemBinding
 
 class ItemFragment : Fragment() {
@@ -70,9 +69,11 @@ class ItemFragment : Fragment() {
         binding.saveButtom.setOnClickListener {
             val newItem = DisplayAddItem(binding).createItem(itemType!!)
             if (newItem != null) {
-                viewModel.updateItems(newItem)
+                viewModel.updateItems(newItem as LibraryItem)
+                viewModel.addItem(newItem)
                 closeFragment()
             }
+
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             closeFragment()

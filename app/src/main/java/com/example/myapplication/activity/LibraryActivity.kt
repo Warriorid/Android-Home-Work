@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.R
+import com.example.myapplication.data.DataRepository
+import com.example.myapplication.data.MainDB
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.fragment.ItemFragment
 import com.example.myapplication.fragment.MainFragment
@@ -15,16 +17,17 @@ import com.example.myapplication.fragment.MainFragment
 class LibraryActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private var isLandscape: Boolean = false
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this)[MainViewModel::class.java]
-    }
+    private lateinit var viewModel: MainViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
+        val dao = MainDB.getDB(this)
+        val repository = DataRepository(dao.getDb())
         isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        viewModel = ViewModelProvider(this, ViewModelFactory(repository))[MainViewModel::class.java]
 
 
 

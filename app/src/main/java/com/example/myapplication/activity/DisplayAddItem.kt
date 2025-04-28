@@ -4,11 +4,10 @@ import android.text.InputType
 import android.text.method.DigitsKeyListener
 import android.view.View
 import com.example.myapplication.R
-import com.example.myapplication.consoleapp.Book
-import com.example.myapplication.consoleapp.Disk
-import com.example.myapplication.consoleapp.LibraryItem
 import com.example.myapplication.data.Month
-import com.example.myapplication.consoleapp.Newspaper
+import com.example.myapplication.data.Book
+import com.example.myapplication.data.Disk
+import com.example.myapplication.data.Newspaper
 import com.example.myapplication.databinding.FragmentItemBinding
 
 class DisplayAddItem(private val binding: FragmentItemBinding) {
@@ -30,7 +29,7 @@ class DisplayAddItem(private val binding: FragmentItemBinding) {
         }
     }
 
-    fun createItem(itemType: String): LibraryItem? {
+    fun createItem(itemType: String): Any? {
         val resources = binding.root.context.resources
         val name = binding.editName.text.toString().takeIf { it.isNotBlank() } ?: run {
             binding.editName.error = resources.getString(R.string.error_enter_name)
@@ -57,7 +56,7 @@ class DisplayAddItem(private val binding: FragmentItemBinding) {
                             resources.getString(R.string.error_enter_author)
                         return null
                     }
-                Book(name, id, access, pages, author)
+                Book(null, name, access, "book", System.currentTimeMillis(), author, pages)
             }
 
             "Newspaper" -> {
@@ -72,7 +71,7 @@ class DisplayAddItem(private val binding: FragmentItemBinding) {
                         resources.getString(R.string.error_enter_month)
                     return null
                 }
-                Newspaper(name, id, access, number, month)
+                Newspaper(null, name, access, "newspaper", System.currentTimeMillis(),number, month)
             }
 
             "Disk" -> {
@@ -80,7 +79,7 @@ class DisplayAddItem(private val binding: FragmentItemBinding) {
                     binding.editOptional.error = resources.getString(R.string.error_enter_type)
                     return null
                 }
-                Disk(name, id, access, type)
+                Disk(null, name, access, "disk", System.currentTimeMillis(), type)
             }
 
             else -> null

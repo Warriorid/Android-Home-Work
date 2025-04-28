@@ -3,7 +3,7 @@ package com.example.myapplication.activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.example.myapplication.consoleapp.LibraryItem
+import com.example.myapplication.data.LibraryItem
 import com.example.myapplication.databinding.ItemTemplateBinding
 
 
