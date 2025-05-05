@@ -1,0 +1,28 @@
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"
+export QT_PLUGIN_PATH=/opt/homebrew/Cellar/qt@5/5.15.16_1/plugins
+export DYLD_LIBRARY_PATH=/opt/homebrew/lib:$DYLD_LIBRARY_PATH
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+export PATH=$PATH:$HOME/Library/Android/sdk/platform-tools
+export PATH=$PATH:~/Library/Android/sdk/emulator
+export PATH=$PATH:~/Library/Android/sdk/platform-tools

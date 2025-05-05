@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.io.IOException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import kotlin.math.max
 
 class MainViewModel(private val repository: DataRepository) : ViewModel() {
@@ -32,6 +35,12 @@ class MainViewModel(private val repository: DataRepository) : ViewModel() {
     val error: SharedFlow<String> = _error
     private val _loading = MutableStateFlow<Boolean?>(null)
     val loading: StateFlow<Boolean?> = _loading
+    private val _searchMode = MutableStateFlow<Boolean?>(false)
+    val searchMode: StateFlow<Boolean?> = _searchMode
+    private var _libraryLoaded = MutableStateFlow(false)
+    val libraryLoaded: StateFlow<Boolean> = _libraryLoaded
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery
 
 
     private var currentOffset = 0
@@ -39,10 +48,41 @@ class MainViewModel(private val repository: DataRepository) : ViewModel() {
     private var canLoadMore = true
     private var canLoadPrevious = false
 
-    init {
-        loadInitialData()
+
+    fun loadMyLibrary() {
+        if (!_libraryLoaded.value) {
+            _loading.value = true
+            _libraryLoaded.value = true
+            loadInitialData()
+        }
+    }
+    fun clearLibraryView() {
+        _item.value = emptyList()
+        _libraryLoaded.value = false
     }
 
+    fun searchBooks(title: String, author: String) {
+        _loading.value = true
+        viewModelScope.launch {
+            try {
+                val result = repository.searchGoogleBooks(
+                    title = if (title.length >= 3) title else null,
+                    author = if (author.length >= 3) author else null
+                )
+                _item.value = result
+            } catch (e: UnknownHostException) {
+                _error.emit("Нет интернет-соединения")
+            } catch (e: SocketTimeoutException) {
+                _error.emit("Таймаут соединения")
+            } catch (e: IOException) {
+                _error.emit("Ошибка сети: ${e.message}")
+            } catch (e: Exception) {
+                _error.emit("Ошибка: ${e.message}")
+            } finally {
+                _loading.value = false
+            }
+        }
+    }
 
     private suspend fun ensureMinimumLoadingTime(startTime: Long) {
         val elapsed = System.currentTimeMillis() - startTime
@@ -170,6 +210,7 @@ class MainViewModel(private val repository: DataRepository) : ViewModel() {
 
     fun sortItems(sortType: String) {
         _loading.value = true
+        _item.value = emptyList()
         viewModelScope.launch {
             val startTime = System.currentTimeMillis()
             try {
@@ -233,15 +274,15 @@ class MainViewModel(private val repository: DataRepository) : ViewModel() {
         _itemType.value = type
     }
 
-    fun setSortType(type: String) {
-        _sortType.value = type
-    }
-
     fun getItemType(): String? {
         return _itemType.value
     }
 
     fun clearSelectedItem() {
         _selectedItem.value = null
+    }
+
+    fun setSearchMode(state: Boolean) {
+        _searchMode.value = state
     }
 }

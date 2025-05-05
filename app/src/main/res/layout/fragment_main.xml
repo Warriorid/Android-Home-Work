@@ -11,7 +11,7 @@
         android:id="@+id/shimmerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ProgressBar
             android:layout_width="90dp"
@@ -29,7 +29,47 @@
         android:paddingTop="115dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_template"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
+
+    <LinearLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_gravity="center"
+        android:visibility="gone">
+
+
+        <EditText
+            android:id="@+id/searchTitleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:padding="12dp"
+            android:hint="Введите назавание"/>
+
+        <EditText
+            android:id="@+id/searchAuthorEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:padding="12dp"
+            android:hint="Введите автора"/>
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Поиск"
+            android:layout_marginTop="24dp"
+            android:enabled="false"
+            android:backgroundTint="@color/yellow"
+            android:textColor="@color/black"
+            android:layout_gravity="center"/>
+    </LinearLayout>
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -39,12 +79,28 @@
         android:paddingTop="40dp"
         android:paddingBottom="16dp"
         app:menu="@menu/toolbar_menu"
-        app:title="Библиотека"
-        app:titleCentered="true"
-        app:titleTextAppearance="@style/MyTitle"
-        app:titleTextColor="@android:color/white"
-        android:visibility="gone">
+        android:visibility="visible">
 
+        <Button
+            android:id="@+id/buttonMyLibrary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Моя библиотека"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:layout_marginEnd="20dp">
+        </Button>
+
+        <Button
+            android:id="@+id/buttonGoogleBooks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Google books"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:layout_marginStart="20dp">
+
+        </Button>
     </com.google.android.material.appbar.MaterialToolbar>
 
 </FrameLayout>

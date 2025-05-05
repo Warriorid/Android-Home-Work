@@ -2,6 +2,8 @@ package com.example.myapplication.fragment
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +41,16 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable?) {
+            val title = binding.searchTitleEditText.text.toString()
+            val author = binding.searchAuthorEditText.text.toString()
+            binding.searchButton.isEnabled = title.length >= 3 || author.length >= 3
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
@@ -49,6 +60,39 @@ class MainFragment : Fragment() {
                 .replace(R.id.itemFragment, ItemFragment())
                 .commit()
         }
+
+        binding.buttonMyLibrary.setOnClickListener {
+            viewModel.setSearchMode(false)
+            viewModel.loadMyLibrary()
+        }
+
+        binding.buttonGoogleBooks.setOnClickListener {
+            viewModel.setSearchMode(true)
+            viewModel.clearLibraryView()
+            binding.shimmerLayout.stopShimmer()
+            binding.shimmerLayout.visibility = View.GONE
+            binding.recyclerView.visibility = View.GONE
+        }
+
+        binding.searchTitleEditText.addTextChangedListener(textWatcher)
+        binding.searchAuthorEditText.addTextChangedListener(textWatcher)
+
+        binding.searchButton.setOnClickListener {
+            val title = binding.searchTitleEditText.text.toString()
+            val author = binding.searchAuthorEditText.text.toString()
+            if (title.length >= 3 || author.length >= 3) {
+                viewModel.searchBooks(title, author)
+            }
+        }
+
+        viewModel.libraryLoaded.onEach { loaded ->
+            if (loaded) {
+                binding.apply {
+                    shimmerLayout.visibility = View.VISIBLE
+                    shimmerLayout.startShimmer()
+                }
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         fragmentAdapter = LibraryAdapter { item ->
             viewModel.selectItem(item)
@@ -84,26 +128,42 @@ class MainFragment : Fragment() {
 
 
         binding.apply {
-            shimmerLayout.visibility = View.VISIBLE
-            shimmerLayout.startShimmer()
-            toolbar.visibility = View.GONE
+            shimmerLayout.visibility = View.GONE
             recyclerView.visibility = View.GONE
+            toolbar.visibility = View.VISIBLE
         }
+
+        viewModel.searchMode.onEach { searchMode ->
+            binding.searchLayout.visibility = if (searchMode == true) View.VISIBLE else View.GONE
+            if (searchMode == false) {
+                binding.searchTitleEditText.text?.clear()
+                binding.searchAuthorEditText.text?.clear()
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+
+        viewModel.searchMode.onEach { searchMode ->
+            binding.searchLayout.visibility = if (searchMode == true) View.VISIBLE else View.GONE
+            if (searchMode == false) {
+                binding.searchTitleEditText.text?.clear()
+                binding.searchAuthorEditText.text?.clear()
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.loading.onEach { loading ->
             if (loading == true) {
                 binding.apply {
                     shimmerLayout.visibility = View.VISIBLE
                     shimmerLayout.startShimmer()
-                    toolbar.visibility = View.GONE
                     recyclerView.visibility = View.GONE
                 }
             } else {
                 binding.apply {
                     shimmerLayout.stopShimmer()
                     shimmerLayout.visibility = View.GONE
-                    toolbar.visibility = View.VISIBLE
-                    recyclerView.visibility = View.VISIBLE
+                    if (viewModel.searchMode.value == true || viewModel.libraryLoaded.value) {
+                        recyclerView.visibility = View.VISIBLE
+                    }
                 }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)

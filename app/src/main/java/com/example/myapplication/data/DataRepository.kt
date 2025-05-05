@@ -1,5 +1,8 @@
 package com.example.myapplication.data
 
+import com.example.myapplication.api.GoogleBookItem
+import com.example.myapplication.api.RetrofitHelper
+
 
 class DataRepository (private val libraryDao: Dao) {
     suspend fun getAllItemsSortedByName(offset: Int, limit: Int): List<LibraryItem> {
@@ -37,6 +40,34 @@ class DataRepository (private val libraryDao: Dao) {
         val newspapersCount = libraryDao.getNewspapersCount()
         val disksCount = libraryDao.getDisksCount()
         return booksCount + newspapersCount + disksCount
+    }
+
+    suspend fun searchGoogleBooks(title: String?, author: String?): List<LibraryItem> {
+        val query = buildString {
+            title?.let { append("intitle:$it") }
+            author?.let {
+                if (isNotEmpty()) append("+")
+                append("inauthor:$it")
+            }
+        }
+
+        return try {
+            val response = RetrofitHelper.googleBooksApi.searchBooks(query)
+            response.items?.mapNotNull { it.toLibraryItem() } ?: emptyList()
+        } catch (e: Exception) {
+            throw Exception("Ошибка поиска: ${e.message}")
+        }
+    }
+
+    private fun GoogleBookItem.toLibraryItem(): LibraryItem? {
+        val volumeInfo = this.volumeInfo ?: return null
+        return Book(
+            name = volumeInfo.title ?: "No title",
+            author = volumeInfo.authors?.joinToString() ?: "Unknown author",
+            pages = volumeInfo.pageCount ?: 0,
+            access = true,
+            addedDate = System.currentTimeMillis()
+        )
     }
 
 }
