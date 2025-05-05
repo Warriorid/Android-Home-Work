@@ -30,7 +30,7 @@ class MainViewModel(private val repository: DataRepository) : ViewModel() {
     private val _selectedItem = MutableLiveData<LibraryItem?>(null)
     val selectedItem: LiveData<LibraryItem?> = _selectedItem
     private val _itemType = MutableLiveData<String?>(null)
-    private val _sortType = MutableLiveData<String>("date")
+    private val _sortType = MutableLiveData("date")
     private val _error = MutableSharedFlow<String>()
     val error: SharedFlow<String> = _error
     private val _loading = MutableStateFlow<Boolean?>(null)
@@ -39,8 +39,6 @@ class MainViewModel(private val repository: DataRepository) : ViewModel() {
     val searchMode: StateFlow<Boolean?> = _searchMode
     private var _libraryLoaded = MutableStateFlow(false)
     val libraryLoaded: StateFlow<Boolean> = _libraryLoaded
-    private val _searchQuery = MutableStateFlow("")
-    val searchQuery: StateFlow<String> = _searchQuery
 
 
     private var currentOffset = 0
@@ -284,5 +282,16 @@ class MainViewModel(private val repository: DataRepository) : ViewModel() {
 
     fun setSearchMode(state: Boolean) {
         _searchMode.value = state
+    }
+
+    fun saveItemToDatabase(item: LibraryItem) {
+        viewModelScope.launch {
+            try {
+                repository.insertItem(item)
+                loadMyLibrary()
+            } catch (e: Exception) {
+                _error.emit("Ошибка сохранения: ${e.message}")
+            }
+        }
     }
 }

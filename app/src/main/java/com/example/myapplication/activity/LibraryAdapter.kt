@@ -8,7 +8,8 @@ import com.example.myapplication.databinding.ItemTemplateBinding
 
 
 class LibraryAdapter(
-    private val onClickItem: (LibraryItem) -> Unit
+    private val onClickItem: (LibraryItem) -> Unit,
+    private val onLongClickItem: (LibraryItem) -> Unit
 ) : ListAdapter<LibraryItem, LibraryViewHolder>(LibraryItemDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryViewHolder {
@@ -23,6 +24,11 @@ class LibraryAdapter(
 
         holder.itemView.setOnClickListener {
             item?.let { onClickItem(it) }
+        }
+
+        holder.itemView.setOnLongClickListener {
+            item?.let { onLongClickItem(it) }
+            true
         }
     }
 

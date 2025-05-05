@@ -81,6 +81,7 @@ class MainFragment : Fragment() {
             val title = binding.searchTitleEditText.text.toString()
             val author = binding.searchAuthorEditText.text.toString()
             if (title.length >= 3 || author.length >= 3) {
+                viewModel.setSearchMode(false)
                 viewModel.searchBooks(title, author)
             }
         }
@@ -94,21 +95,29 @@ class MainFragment : Fragment() {
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        fragmentAdapter = LibraryAdapter { item ->
-            viewModel.selectItem(item)
-
-            if (isLandscape) {
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.itemFragment, ItemFragment())
-                    .commit()
-            } else {
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.mainFragment, ItemFragment())
-                    .addToBackStack(null)
-                    .commit()
+        fragmentAdapter = LibraryAdapter(
+            onClickItem = { item ->
+                viewModel.selectItem(item)
+                if (isLandscape) {
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.itemFragment, ItemFragment())
+                        .commit()
+                } else {
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.mainFragment, ItemFragment())
+                        .addToBackStack(null)
+                        .commit()
+                }
+            },
+            onLongClickItem = { item ->
+                viewModel.saveItemToDatabase(item)
+                Toast.makeText(
+                    requireContext(),
+                    "${item.name} сохранен в библиотеку",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-
-        }
+        )
         binding.recyclerView.apply {
             adapter = fragmentAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -134,37 +143,20 @@ class MainFragment : Fragment() {
         }
 
         viewModel.searchMode.onEach { searchMode ->
-            binding.searchLayout.visibility = if (searchMode == true) View.VISIBLE else View.GONE
-            if (searchMode == false) {
-                binding.searchTitleEditText.text?.clear()
-                binding.searchAuthorEditText.text?.clear()
-            }
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
-
-
-        viewModel.searchMode.onEach { searchMode ->
-            binding.searchLayout.visibility = if (searchMode == true) View.VISIBLE else View.GONE
-            if (searchMode == false) {
-                binding.searchTitleEditText.text?.clear()
-                binding.searchAuthorEditText.text?.clear()
-            }
+            if (searchMode!!) {
+                binding.searchLayout.visibility = View.VISIBLE
+            } else  binding.searchLayout.visibility = View.GONE
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.loading.onEach { loading ->
             if (loading == true) {
-                binding.apply {
-                    shimmerLayout.visibility = View.VISIBLE
-                    shimmerLayout.startShimmer()
-                    recyclerView.visibility = View.GONE
-                }
+                binding.shimmerLayout.visibility = View.VISIBLE
+                binding.shimmerLayout.startShimmer()
+                binding.recyclerView.visibility = View.GONE
             } else {
-                binding.apply {
-                    shimmerLayout.stopShimmer()
-                    shimmerLayout.visibility = View.GONE
-                    if (viewModel.searchMode.value == true || viewModel.libraryLoaded.value) {
-                        recyclerView.visibility = View.VISIBLE
-                    }
-                }
+                binding.shimmerLayout.stopShimmer()
+                binding.shimmerLayout.visibility = View.GONE
+                binding.recyclerView.visibility = View.VISIBLE
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
