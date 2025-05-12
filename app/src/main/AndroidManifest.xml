@@ -16,7 +16,7 @@
 
         tools:targetApi="tiramisu">
         <activity
-            android:name=".activity.LibraryActivity"
+            android:name="com.example.myapplication.presentation.activity.LibraryActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

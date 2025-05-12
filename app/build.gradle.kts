@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.hilt.android)
     kotlin("kapt")
     id("kotlin-parcelize")
 }
@@ -44,29 +45,39 @@ android {
 }
 
 dependencies {
-    implementation(libs.glide)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.runtime.android)
-    implementation(libs.shimmer)
+
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
+
     implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlin.reflect)
+
     implementation(libs.retrofit)
-    implementation(libs.retrofit.kotlin.serialization)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.kotlinx.serialization.core)
     implementation(libs.gson)
     implementation(libs.retrofit.converter.gson)
-    kapt(libs.androidx.room.compiler)
+
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.androidx.viewmodel)
+    kapt(libs.hilt.androidx.compiler)
+
+    implementation(libs.glide)
+    kapt(libs.glide.compiler)
+
+    implementation(libs.shimmer)
+    implementation(libs.kotlin.reflect)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
