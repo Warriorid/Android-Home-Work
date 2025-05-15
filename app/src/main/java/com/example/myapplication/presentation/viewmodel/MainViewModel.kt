@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.domain.repository.DataRepository
+import com.example.myapplication.data.repository.DataRepository
 import com.example.myapplication.domain.model.LibraryItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow

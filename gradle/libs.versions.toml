@@ -1,30 +1,34 @@
 [versions]
 agp = "8.8.1"
-kotlin = "1.9.24"
-coreKtx = "1.10.1"
+hiltCompiler = "1.2.0"
+hiltNavigationCompose = "1.2.0"
+kotlin = "2.0.0"
+coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
 kotlinReflect = "1.9.24"
 material = "1.12.0"
-activity = "1.8.0"
-constraintlayout = "2.1.4"
-navigationRuntimeAndroid = "2.9.0-alpha09"
+activity = "1.10.1"
+constraintlayout = "2.2.1"
+navigationRuntimeAndroid = "2.9.0"
 shimmer = "0.5.0"
-navigation = "2.7.7"
-room = "2.6.1"
+navigation = "2.9.0"
+room = "2.7.1"
 kotlinx-coroutines = "1.7.3"
 glide = "4.16.0"
 retrofit = "2.11.0"
 okhttp = "4.12.0"
 kotlinx-serialization = "1.6.3"
 gson = "2.10.1"
-hilt = "2.48"
-hiltAndroidx = "1.0.0"
+hilt = "2.51"
+hiltAndroidx = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-hilt-compiler-v120 = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompiler" }
+androidx-hilt-navigation-compose-v120 = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -52,9 +56,8 @@ retrofit-kotlin-serialization = { module = "com.jakewharton.retrofit:retrofit2-k
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-androidx-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltAndroidx" }
-hilt-androidx-viewmodel = { group = "androidx.hilt", name = "hilt-lifecycle-viewmodel", version.ref = "hiltAndroidx" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 
 
 [plugins]

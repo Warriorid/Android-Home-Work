@@ -10,7 +10,8 @@ import com.example.myapplication.common.util.LibraryItemDiffUtil
 
 class LibraryAdapter(
     private val onClickItem: (LibraryItem) -> Unit,
-    private val onLongClickItem: (LibraryItem) -> Unit
+    private val onLongClickItem: (LibraryItem) -> Unit,
+    private val onSwipeToDelete: (LibraryItem) -> Unit
 ) : ListAdapter<LibraryItem, LibraryViewHolder>(LibraryItemDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryViewHolder {
@@ -33,11 +34,8 @@ class LibraryAdapter(
         }
     }
 
-    fun removeItem(position: Int): LibraryItem? {
-        val item = currentList.getOrNull(position) ?: return null
-        val newList = currentList.toMutableList().apply { removeAt(position) }
-        submitList(newList)
-        return item
+    fun notifyItemSwiped(position: Int) {
+        getItem(position)?.let { onSwipeToDelete(it) }
     }
 
 }

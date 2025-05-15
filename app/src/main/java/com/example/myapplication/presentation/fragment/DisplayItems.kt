@@ -12,8 +12,9 @@ class DisplayItems(private val binding: FragmentItemBinding) {
     fun displayItem(item: LibraryItem) {
         binding.apply {
             textItemName.text = item.name
-            itemTextIdResult.text = item.id.toString()
+            itemTextIdResult.text = item.id?.toString() ?: ""
             itemTextAccessResult.text = if (item.access) "В наличии" else "Нет в наличии"
+
             saveButtom.visibility = View.GONE
             editName.visibility = View.GONE
             editId.visibility = View.GONE
@@ -21,15 +22,20 @@ class DisplayItems(private val binding: FragmentItemBinding) {
             editOptional.visibility = View.GONE
             editSecondOptional.visibility = View.GONE
 
-            when (item.itemType) {
-                "book" -> displayBook(item as Book)
-                "newspaper" -> displayNewspaper(item as Newspaper)
-                "disk" -> displayDisk(item as Disk)
+            try {
+                when (item.itemType) {
+                    "book" -> displayBook(item as com.example.myapplication.domain.model.Book)
+                    "newspaper" -> displayNewspaper(item as com.example.myapplication.domain.model.Newspaper)
+                    "disk" -> displayDisk(item as com.example.myapplication.domain.model.Disk)
+                    else -> throw IllegalArgumentException("UnknownItemType")
+                }
+            } catch (e: ClassCastException) {
+                throw IllegalArgumentException("UnknownItemType")
             }
         }
     }
 
-    private fun displayBook(book: Book) {
+    private fun displayBook(book: com.example.myapplication.domain.model.Book) {
         binding.apply {
             imageItem.setImageResource(R.drawable.book_avatar)
             itemTextOptionally.text = "Страниц:"
@@ -39,7 +45,7 @@ class DisplayItems(private val binding: FragmentItemBinding) {
         }
     }
 
-    private fun displayNewspaper(newspaper: Newspaper) {
+    private fun displayNewspaper(newspaper: com.example.myapplication.domain.model.Newspaper) {
         binding.apply {
             imageItem.setImageResource(R.drawable.newspaper_avatar)
             itemTextOptionally.text = "Номер:"
@@ -49,7 +55,7 @@ class DisplayItems(private val binding: FragmentItemBinding) {
         }
     }
 
-    private fun displayDisk(disk: Disk) {
+    private fun displayDisk(disk: com.example.myapplication.domain.model.Disk) {
         binding.apply {
             imageItem.setImageResource(R.drawable.disk_avatar)
             itemTextOptionally.text = "Тип:"

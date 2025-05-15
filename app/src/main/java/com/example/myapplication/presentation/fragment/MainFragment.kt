@@ -109,19 +109,22 @@ class MainFragment : Fragment() {
                         .commit()
                 }
             },
-            onLongClickItem = { item ->
-                viewModel.saveItemToDatabase(item)
-                Toast.makeText(
-                    requireContext(),
-                    "${item.name} сохранен в библиотеку",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+    onLongClickItem = { item ->
+        viewModel.saveItemToDatabase(item)
+        Toast.makeText(
+            requireContext(),
+            "${item.name} сохранен в библиотеку",
+            Toast.LENGTH_SHORT
+        ).show()
+    },
+    onSwipeToDelete = { item ->
+        viewModel.removeItems(listOf(item), viewModel.selectedItem.value)
+    }
         )
         binding.recyclerView.apply {
             adapter = fragmentAdapter
             layoutManager = LinearLayoutManager(requireContext())
-            val swipeDeleted = LibraryItemTouchHelper(fragmentAdapter, viewModel)
+            val swipeDeleted = LibraryItemTouchHelper(fragmentAdapter)
             ItemTouchHelper(swipeDeleted).attachToRecyclerView(this)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

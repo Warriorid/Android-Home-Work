@@ -6,7 +6,9 @@ import androidx.room.Insert
 import androidx.room.Query
 import com.example.myapplication.data.model.Book
 import com.example.myapplication.data.model.Disk
+import com.example.myapplication.data.model.LibraryItemEntity
 import com.example.myapplication.data.model.Newspaper
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface Dao {
@@ -54,6 +56,16 @@ interface Dao {
 
     @Query("SELECT * FROM disks ORDER BY added_date LIMIT :limit OFFSET :offset")
     suspend fun getDisksSortedByDate(offset: Int, limit: Int): List<Disk>
+
+
+    @Query("""
+        SELECT id, name, access, item_type AS itemType, added_date AS addedDate FROM books
+        UNION SELECT id, name, access, item_type AS itemType, added_date AS addedDate FROM newspapers
+        UNION SELECT id, name, access, item_type AS itemType, added_date AS addedDate FROM disks
+        ORDER BY addedDate
+    """)
+    fun observeAllItems(): Flow<List<LibraryItemEntity>>
+
 
 
 

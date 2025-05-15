@@ -7,8 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.R
-import com.example.myapplication.domain.repository.DataRepository
+import com.example.myapplication.data.api.RetrofitHelper
+import com.example.myapplication.data.repository.DataRepository
 import com.example.myapplication.data.db.MainDB
+import com.example.myapplication.data.mapper.BookMapper
+import com.example.myapplication.data.mapper.GoogleBooksMapper
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.presentation.fragment.ItemFragment
 import com.example.myapplication.presentation.fragment.MainFragment
@@ -27,7 +30,20 @@ class LibraryActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
         val dao = MainDB.getDB(this)
-        val repository = DataRepository(dao.getDb())
+        val bookMapper = BookMapper
+        val newspaperMapper = com.example.myapplication.data.mapper.NewspaperMapper
+        val diskMapper = com.example.myapplication.data.mapper.DiskMapper
+        val googleBooksMapper = GoogleBooksMapper()
+        val googleBooksApi = RetrofitHelper.googleBooksApi
+        val repository = DataRepository(
+            libraryDao = dao.getDb(),
+            googleBooksApi = googleBooksApi,
+            mapper = googleBooksMapper,
+            bookMapper = bookMapper,
+            newspaperMapper = newspaperMapper,
+            diskMapper = diskMapper
+        )
+
         isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         viewModel = ViewModelProvider(this, ViewModelFactory(repository))[MainViewModel::class.java]
 

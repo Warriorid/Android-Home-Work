@@ -5,9 +5,9 @@ import android.text.method.DigitsKeyListener
 import android.view.View
 import com.example.myapplication.R
 import com.example.myapplication.domain.model.Month
-import com.example.myapplication.data.model.Book
-import com.example.myapplication.data.model.Disk
-import com.example.myapplication.data.model.Newspaper
+import com.example.myapplication.domain.model.Book
+import com.example.myapplication.domain.model.Disk
+import com.example.myapplication.domain.model.Newspaper
 import com.example.myapplication.databinding.FragmentItemBinding
 
 class DisplayAddItem(private val binding: FragmentItemBinding) {
@@ -33,11 +33,6 @@ class DisplayAddItem(private val binding: FragmentItemBinding) {
         val resources = binding.root.context.resources
         val name = binding.editName.text.toString().takeIf { it.isNotBlank() } ?: run {
             binding.editName.error = resources.getString(R.string.error_enter_name)
-            return null
-        }
-
-        val id = binding.editId.text.toString().toIntOrNull() ?: run {
-            binding.editId.error = resources.getString(R.string.error_enter_numeric_id)
             return null
         }
 

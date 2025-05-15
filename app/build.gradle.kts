@@ -69,8 +69,10 @@ dependencies {
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    implementation(libs.hilt.androidx.viewmodel)
     kapt(libs.hilt.androidx.compiler)
+
+    implementation(libs.androidx.hilt.navigation.compose.v120)
+    kapt(libs.androidx.hilt.compiler.v120)
 
     implementation(libs.glide)
     kapt(libs.glide.compiler)
