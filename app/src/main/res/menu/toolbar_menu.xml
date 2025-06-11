@@ -16,4 +16,14 @@
         android:id="@+id/action_disk"
         android:title="Добавить диск"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_sort_by_name"
+        android:title="Сортировка по названию"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_sort_by_date"
+        android:title="Сортировка по дате"
+        app:showAsAction="never"/>
 </menu>
